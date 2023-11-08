@@ -1,0 +1,66 @@
+﻿@model ProductSearchViewModel
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductName)
+        @Html.EditorFor(model => model.ProductName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Size)
+        @Html.EditorFor(model => model.Size)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price)
+        @Html.EditorFor(model => model.Price)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MfgDate)
+        @Html.EditorFor(model => model.MfgDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Category)
+        @Html.EditorFor(model => model.Category)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Conjunction)
+        @Html.DropDownListFor(model => model.Conjunction, new List<SelectListItem>
+    {
+    new SelectListItem { Text = "AND", Value = "AND" },
+    new SelectListItem { Text = "OR", Value = "OR" }
+    })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Search" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Clear</a>
+    </div>
+}
+
+@if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ProductId</th>
+                <th>ProductName</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>MfgDate</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.SearchResults)
+            {
+                <tr>
+                    <td>@product.ProductId</td>
+                    <td>@product.ProductName</td>
+                    <td>@product.Size</td>
+                    <td>@product.Price</td>
+                    <td>@product.MfgDate</td>
+                    <td>@product.Category</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
